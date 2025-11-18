@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviator Betting Tracker</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Aviator Tracker">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+    <link rel="manifest" href="data:application/json,{
+      \"name\": \"Aviator Betting Tracker\",
+      \"short_name\": \"AviatorTracker\",
+      \"description\": \"Track your Aviator bets and analyze performance\",
+      \"start_url\": \".\",
+      \"display\": \"standalone\",
+      \"background_color\": \"#0f0f23\",
+      \"theme_color\": \"#667eea\",
+      \"orientation\": \"any\",
+      \"icons\": [
+        {
+          \"src\": \"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiM2NjdlZWEiLz4KPHN2ZyB4PSI0OCIgeT0iNDgiIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CjxwYXRoIGQ9Ik0yIDhMMjIgOGwyMC02IDIgMTIgLTIwIDZMMiAxNHY2WiIvPgo8cGF0aCBkPSJNMjIgOGwxMC02Ii8+CjxwYXRoIGQ9Ik0yMiAxNGwxMC02Ii8+Cjwvc3ZnPgo8L3N2Zz4K\",
+          \"sizes\": \"192x192\",
+          \"type\": \"image/svg+xml\"
+        },
+        {
+          \"src\": \"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iNjQiIGZpbGw9IiM2NjdlZWEiLz4KPHN2ZyB4PSIxMjgiIHk9IjEyOCIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgo8cGF0aCBkPSJNMiA4TDIyIDhsMjAtNiAyIDEyIC0yMCA2TDIgMTR2NloiLz4KPHBhdGggZD0iTTIyIDhsMTAtNiIvPgo8cGF0aCBkPSJNMjIgMTRsMTAtNiIvPgo8L3N2Zz4KPC9zdmc+\",
+          \"sizes\": \"512x512\",
+          \"type\": \"image/svg+xml\"
+        }
+      ]
+    }">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f0f23;
+            min-height: 100vh;
+            padding: 10px;
+            color: #e8e8e8;
+            /* PWA Safe Areas */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .title-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+            font-size: 2.2em;
+            font-weight: 800;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 0.9em;
+        }
+        
+        .currency-selector {
+            background: #16213e;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid #2a2d3a;
+            color: #e8e8e8;
+            font-size: 0.9em;
+            font-weight: 600;
+            min-width: 120px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .stat-card.negative {
+            background: linear-gradient(135deg, #fc5c7d 0%, #6a82fb 100%);
+        }
+        
+        .stat-card.positive {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .stat-label {
+            font-size: 0.75em;
+            opacity: 0.85;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: 800;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .input-section {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 0;
+        }
+        
+        .history-section {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 0;
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #e8e8e8;
+            font-size: 0.85em;
+        }
+        
+        input, select {
+            padding: 12px;
+            border: 2px solid #2a2d3a;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #0f0f23;
+            color: #e8e8e8;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #fc5c7d 0%, #6a82fb 100%);
+        }
+        
+        .btn-tertiary {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+        }
+        
+        .history-section h2 {
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            color: #e8e8e8;
+        }
+        
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+            border-left: 4px solid transparent;
+        }
+        
+        .history-item.win-item {
+            border-left-color: #43e97b;
+        }
+        
+        .history-item.loss-item {
+            border-left-color: #fc5c7d;
+        }
+        
+        .history-number {
+            background: #0f0f23;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85em;
+            color: #667eea;
+        }
+        
+        .history-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+        
+        .history-main {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .history-bet {
+            font-size: 0.9em;
+            color: #888;
+        }
+        
+        .history-multiplier {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85em;
+        }
+        
+        .multiplier-low {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+        
+        .multiplier-medium {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+        
+        .multiplier-high {
+            background: rgba(252, 92, 125, 0.2);
+            color: #fc5c7d;
+        }
+        
+        .history-profit {
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+        
+        .history-profit.profit-positive {
+            color: #43e97b;
+        }
+        
+        .history-profit.profit-negative {
+            color: #fc5c7d;
+        }
+        
+        .history-meta {
+            font-size: 0.75em;
+            color: #666;
+        }
+        
+        .history-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-delete {
+            background: rgba(252, 92, 125, 0.2);
+            color: #fc5c7d;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            box-shadow: none;
+        }
+        
+        .btn-delete:active {
+            background: rgba(252, 92, 125, 0.3);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .alert-warning {
+            background: rgba(255, 193, 7, 0.15);
+            border-left: 4px solid #ffc107;
+            color: #ffca28;
+        }
+        
+        .alert-danger {
+            background: rgba(252, 92, 125, 0.15);
+            border-left: 4px solid #fc5c7d;
+            color: #ff6b9d;
+        }
+        
+        .btn-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .btn-full {
+            grid-column: 1 / -1;
+        }
+        
+        .result-toggle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background: #0f0f23;
+            padding: 4px;
+            border-radius: 10px;
+        }
+        
+        .result-option {
+            padding: 12px;
+            background: transparent;
+            color: #888;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: none;
+        }
+        
+        .result-option.active {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: #0f0f23;
+            border-color: #43e97b;
+        }
+        
+        .result-option[data-result="loss"].active {
+            background: linear-gradient(135deg, #fc5c7d 0%, #6a82fb 100%);
+            color: white;
+            border-color: #fc5c7d;
+        }
+        
+        .result-option:active:not(.active) {
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .balance-manager {
+            margin-bottom: 16px;
+        }
+        
+        .btn-balance {
+            width: 100%;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.95em;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(252, 182, 159, 0.3);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #2a2d3a;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.3em;
+            color: #e8e8e8;
+        }
+        
+        .modal-close {
+            background: rgba(252, 92, 125, 0.2);
+            color: #fc5c7d;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            box-shadow: none;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .balance-display {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .balance-label {
+            font-size: 0.85em;
+            color: rgba(0,0,0,0.7);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .balance-amount {
+            font-size: 2.2em;
+            font-weight: 800;
+            color: #0f0f23;
+        }
+        
+        .btn-add {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: #0f0f23;
+        }
+        
+        .btn-remove {
+            background: linear-gradient(135deg, #fc5c7d 0%, #6a82fb 100%);
+        }
+        
+        .balance-quick {
+            margin: 20px 0;
+        }
+        
+        .quick-amounts {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        
+        .quick-amounts button {
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            border: 1px solid #667eea;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85em;
+            cursor: pointer;
+            box-shadow: none;
+        }
+        
+        .quick-amounts button:active {
+            background: rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-reset {
+            width: 100%;
+            background: rgba(252, 92, 125, 0.2);
+            color: #fc5c7d;
+            border: 1px solid #fc5c7d;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: none;
+        }
+        
+        .recommended-bets {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+        }
+        
+        .recommended-label {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .recommended-amounts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .recommended-amounts button {
+            padding: 10px 8px;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            border: 1px solid #667eea;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.75em;
+            cursor: pointer;
+            box-shadow: none;
+            line-height: 1.3;
+            text-align: center;
+        }
+        
+        .recommended-amounts button:active {
+            background: rgba(102, 126, 234, 0.3);
+            transform: scale(0.98);
+        }
+        
+        .rec-amount {
+            display: block;
+            font-size: 1.1em;
+            font-weight: 800;
+            color: #e8e8e8;
+            margin-top: 4px;
+        }
+        
+        .section-title {
+            font-size: 1em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #e8e8e8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .recovery-section {
+            background: rgba(252, 92, 125, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border-left: 4px solid #fc5c7d;
+        }
+        
+        .recovery-label {
+            font-size: 0.85em;
+            color: #ff6b9d;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .recovery-amounts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .recovery-amounts button {
+            padding: 10px 8px;
+            background: rgba(252, 92, 125, 0.2);
+            color: #fc5c7d;
+            border: 1px solid #fc5c7d;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.75em;
+            cursor: pointer;
+            box-shadow: none;
+            line-height: 1.3;
+            text-align: center;
+        }
+        
+        .recovery-amounts button:active {
+            background: rgba(252, 92, 125, 0.3);
+            transform: scale(0.98);
+        }
+        
+        .recov-amount {
+            display: block;
+            font-size: 1.1em;
+            font-weight: 800;
+            color: #e8e8e8;
+            margin-top: 4px;
+        }
+        
+        .install-prompt {
+            background: rgba(67, 233, 123, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border-left: 4px solid #43e97b;
+            display: none;
+        }
+        
+        .install-prompt.show {
+            display: block;
+        }
+        
+        .install-label {
+            font-size: 0.85em;
+            color: #43e97b;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .title-section {
+                min-width: auto;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .stat-card {
+                padding: 12px;
+                min-height: 80px;
+            }
+            
+            .stat-value {
+                font-size: 1.3em;
+            }
+            
+            .btn-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .history-list {
+                max-height: 400px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 12px;
+                border-radius: 12px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .stat-card {
+                padding: 10px;
+                min-height: 70px;
+            }
+            
+            .stat-value {
+                font-size: 1.2em;
+            }
+            
+            .input-section, .history-section {
+                padding: 15px;
+            }
+            
+            button {
+                padding: 12px 16px;
+                font-size: 0.9em;
+            }
+            
+            .recommended-amounts, .recovery-amounts {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-amounts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.3em;
+            }
+            
+            .stat-value {
+                font-size: 1.1em;
+            }
+            
+            .input-section, .history-section {
+                padding: 12px;
+            }
+        }
+        
+        /* PWA Fullscreen Styles */
+        @media all and (display-mode: fullscreen) {
+            body {
+                padding: 0;
+            }
+            .container {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+        }
+        
+        @media all and (display-mode: standalone) {
+            body {
+                padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom) 10px;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .history-list::-webkit-scrollbar-track {
+            background: #0f0f23;
+            border-radius: 3px;
+        }
+        
+        .history-list::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 3px;
+        }
+        
+        .history-list::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="title-section">
+                <h1>✈️ Aviator Betting Tracker</h1>
+                <p class="subtitle">Track your bets, analyze your performance, and make informed decisions</p>
+            </div>
+            <select class="currency-selector" id="currencySelector" onchange="changeCurrency()">
+                <option value="LKR">🇱🇰 LKR - Sri Lankan Rupee</option>
+                <option value="USD">🇺🇸 USD - US Dollar</option>
+                <option value="EUR">🇪🇺 EUR - Euro</option>
+                <option value="GBP">🇬🇧 GBP - British Pound</option>
+                <option value="INR">🇮🇳 INR - Indian Rupee</option>
+                <option value="AUD">🇦🇺 AUD - Australian Dollar</option>
+                <option value="CAD">🇨🇦 CAD - Canadian Dollar</option>
+                <option value="SGD">🇸🇬 SGD - Singapore Dollar</option>
+                <option value="MYR">🇲🇾 MYR - Malaysian Ringgit</option>
+                <option value="JPY">🇯🇵 JPY - Japanese Yen</option>
+                <option value="CNY">🇨🇳 CNY - Chinese Yuan</option>
+                <option value="AED">🇦🇪 AED - UAE Dirham</option>
+                <option value="SAR">🇸🇦 SAR - Saudi Riyal</option>
+                <option value="QAR">🇶🇦 QAR - Qatari Riyal</option>
+                <option value="BDT">🇧🇩 BDT - Bangladeshi Taka</option>
+                <option value="PKR">🇵🇰 PKR - Pakistani Rupee</option>
+                <option value="NPR">🇳🇵 NPR - Nepalese Rupee</option>
+            </select>
+        </div>
+        
+        <div class="install-prompt" id="installPrompt">
+            <div class="install-label">📱 Install App for Better Experience</div>
+            <button class="btn-full" onclick="installApp()">Add to Home Screen</button>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card positive" id="balanceCard">
+                <div class="stat-label">Current Balance</div>
+                <div class="stat-value" id="currentBalance">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Bets</div>
+                <div class="stat-value" id="totalBets">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Wagered</div>
+                <div class="stat-value" id="totalWagered">0</div>
+            </div>
+            <div class="stat-card" id="profitCard">
+                <div class="stat-label">Net Profit/Loss</div>
+                <div class="stat-value" id="netProfit">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Win Rate</div>
+                <div class="stat-value" id="winRate">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Biggest Win</div>
+                <div class="stat-value" id="biggestWin">0</div>
+            </div>
+        </div>
+        
+        <div class="balance-manager">
+            <button onclick="showBalanceModal()" class="btn-balance">
+                💰 Manage Balance
+            </button>
+        </div>
+        
+        <div id="balanceModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>💰 Balance Manager</h3>
+                    <button class="modal-close" onclick="closeBalanceModal()">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="balance-display">
+                        <div class="balance-label">Current Balance</div>
+                        <div class="balance-amount" id="modalBalance">0</div>
+                    </div>
+                    <div class="input-group">
+                        <label>Add/Remove Amount</label>
+                        <input type="number" id="balanceAmount" placeholder="100.00" step="0.01">
+                    </div>
+                    <div class="btn-container">
+                        <button onclick="addBalance()" class="btn-add">➕ Add Funds</button>
+                        <button onclick="removeBalance()" class="btn-remove">➖ Remove</button>
+                    </div>
+                    <div class="balance-quick">
+                        <div style="font-size: 0.85em; color: #888; margin-bottom: 8px;">Quick Add:</div>
+                        <div class="quick-amounts">
+                            <button onclick="quickBalance(100)">+100</button>
+                            <button onclick="quickBalance(500)">+500</button>
+                            <button onclick="quickBalance(1000)">+1000</button>
+                            <button onclick="quickBalance(5000)">+5000</button>
+                        </div>
+                    </div>
+                    <button onclick="resetBalance()" class="btn-reset">🔄 Reset Balance</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="alertContainer"></div>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <div class="section-title">📝 Add New Bet</div>
+                
+                <div class="recommended-bets" id="recommendedBets">
+                    <div class="recommended-label">💡 Recommended Bet Sizes:</div>
+                    <div class="recommended-amounts">
+                        <button onclick="setRecommendedBet(1)">Conservative<br><span class="rec-amount">0</span></button>
+                        <button onclick="setRecommendedBet(3)">Moderate<br><span class="rec-amount">0</span></button>
+                        <button onclick="setRecommendedBet(5)">Aggressive<br><span class="rec-amount">0</span></button>
+                    </div>
+                </div>
+                
+                <div class="recovery-section" id="recoverySection" style="display: none;">
+                    <div class="recovery-label">💸 Recovery Bets (Cover last loss):</div>
+                    <div class="recovery-amounts">
+                        <button onclick="setRecoveryBet(2)">2x Recovery<br><span class="recov-amount">0</span></button>
+                        <button onclick="setRecoveryBet(3)">3x Recovery<br><span class="recov-amount">0</span></button>
+                        <button onclick="setRecoveryBet(5)">5x Recovery<br><span class="recov-amount">0</span></button>
+                    </div>
+                </div>
+                
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>Bet Amount</label>
+                        <input type="number" id="betAmount" placeholder="20.00" min="20" step="0.01">
+                    </div>
+                    <div class="input-group" id="multiplierGroup">
+                        <label>Multiplier</label>
+                        <input type="number" id="multiplier" placeholder="2.00" min="1.00" step="0.01" value="2.00">
+                    </div>
+                    <div class="input-group">
+                        <label>Result</label>
+                        <div class="result-toggle">
+                            <button type="button" class="result-option active" data-result="win" onclick="selectResult('win')">
+                                ✅ Win
+                            </button>
+                            <button type="button" class="result-option" data-result="loss" onclick="selectResult('loss')">
+                                ❌ Loss
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <button class="btn-full" onclick="addBet()">➕ Add Bet</button>
+                    <button class="btn-secondary" onclick="clearHistory()">🗑️ Clear</button>
+                    <button class="btn-tertiary" onclick="exportData()">💾 Export</button>
+                </div>
+            </div>
+            
+            <div class="history-section">
+                <div class="section-title">📊 Betting History</div>
+                <div class="history-list" id="historyContainer">
+                    <div class="empty-state">
+                        No bets recorded yet.<br>Start tracking above! 🚀
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let bets = [];
+        let selectedResult = 'win';
+        let currentBalance = 0;
+        let lastLossAmount = 0;
+        let deferredPrompt = null;
+        let currentCurrency = 'LKR';
+
+        // Currency configuration
+        const currencyConfig = {
+            'LKR': { symbol: 'LKR', name: 'Sri Lankan Rupee', decimal: 2 },
+            'USD': { symbol: '$', name: 'US Dollar', decimal: 2 },
+            'EUR': { symbol: '€', name: 'Euro', decimal: 2 },
+            'GBP': { symbol: '£', name: 'British Pound', decimal: 2 },
+            'INR': { symbol: '₹', name: 'Indian Rupee', decimal: 2 },
+            'AUD': { symbol: 'A$', name: 'Australian Dollar', decimal: 2 },
+            'CAD': { symbol: 'C$', name: 'Canadian Dollar', decimal: 2 },
+            'SGD': { symbol: 'S$', name: 'Singapore Dollar', decimal: 2 },
+            'MYR': { symbol: 'RM', name: 'Malaysian Ringgit', decimal: 2 },
+            'JPY': { symbol: '¥', name: 'Japanese Yen', decimal: 0 },
+            'CNY': { symbol: '¥', name: 'Chinese Yuan', decimal: 2 },
+            'AED': { symbol: 'AED', name: 'UAE Dirham', decimal: 2 },
+            'SAR': { symbol: 'SAR', name: 'Saudi Riyal', decimal: 2 },
+            'QAR': { symbol: 'QAR', name: 'Qatari Riyal', decimal: 2 },
+            'BDT': { symbol: '৳', name: 'Bangladeshi Taka', decimal: 2 },
+            'PKR': { symbol: '₨', name: 'Pakistani Rupee', decimal: 2 },
+            'NPR': { symbol: '₨', name: 'Nepalese Rupee', decimal: 2 }
+        };
+
+        // Format currency amount
+        function formatCurrency(amount) {
+            const config = currencyConfig[currentCurrency];
+            const formattedAmount = parseFloat(amount).toFixed(config.decimal);
+            if (config.symbol.includes('$') || config.symbol.includes('€') || config.symbol.includes('£') || config.symbol.includes('¥') || config.symbol.includes('₹') || config.symbol.includes('৳') || config.symbol.includes('₨')) {
+                return `${config.symbol}${formattedAmount}`;
+            } else {
+                return `${formattedAmount} ${config.symbol}`;
+            }
+        }
+
+        // Change currency
+        function changeCurrency() {
+            const selector = document.getElementById('currencySelector');
+            currentCurrency = selector.value;
+            localStorage.setItem('aviatorCurrency', currentCurrency);
+            updateAllCurrencyDisplays();
+        }
+
+        // Update all currency displays
+        function updateAllCurrencyDisplays() {
+            updateStats();
+            updateRecommendedBets();
+            updateRecoveryBets();
+            document.getElementById('modalBalance').textContent = formatCurrency(currentBalance);
+        }
+
+        // PWA Installation
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallPromotion();
+        });
+
+        function showInstallPromotion() {
+            const installPrompt = document.getElementById('installPrompt');
+            installPrompt.classList.add('show');
+        }
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('installPrompt').classList.remove('show');
+                });
+            }
+        }
+
+        // Check if app is installed
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            document.getElementById('installPrompt').classList.remove('show');
+        });
+        
+        // Load saved data
+        function loadData() {
+            const saved = localStorage.getItem('aviatorBets');
+            if (saved) {
+                bets = JSON.parse(saved);
+            }
+            const savedBalance = localStorage.getItem('aviatorBalance');
+            if (savedBalance) {
+                currentBalance = parseFloat(savedBalance);
+            }
+            const savedLoss = localStorage.getItem('aviatorLastLoss');
+            if (savedLoss) {
+                lastLossAmount = parseFloat(savedLoss);
+            }
+            const savedCurrency = localStorage.getItem('aviatorCurrency');
+            if (savedCurrency) {
+                currentCurrency = savedCurrency;
+                document.getElementById('currencySelector').value = currentCurrency;
+            }
+            updateStats();
+            renderHistory();
+            updateRecoveryBets();
+        }
+        
+        // Save data
+        function saveData() {
+            localStorage.setItem('aviatorBets', JSON.stringify(bets));
+            localStorage.setItem('aviatorBalance', currentBalance.toString());
+            localStorage.setItem('aviatorLastLoss', lastLossAmount.toString());
+            localStorage.setItem('aviatorCurrency', currentCurrency);
+        }
+        
+        // Select result (Win/Loss)
+        function selectResult(result) {
+            selectedResult = result;
+            document.querySelectorAll('.result-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-result="${result}"]`).classList.add('active');
+            
+            // Show/hide multiplier input based on result
+            const multiplierGroup = document.getElementById('multiplierGroup');
+            if (result === 'loss') {
+                multiplierGroup.style.display = 'none';
+            } else {
+                multiplierGroup.style.display = 'flex';
+            }
+        }
+        
+        // Set recommended bet size
+        function setRecommendedBet(percentage) {
+            const amount = Math.max((currentBalance * percentage / 100), 20).toFixed(2);
+            document.getElementById('betAmount').value = amount;
+        }
+        
+        // Set recovery bet size
+        function setRecoveryBet(multiplier) {
+            if (lastLossAmount > 0) {
+                const recoveryAmount = Math.max((lastLossAmount / (multiplier - 1)), 20).toFixed(2);
+                document.getElementById('betAmount').value = recoveryAmount;
+                document.getElementById('multiplier').value = multiplier.toFixed(2);
+                selectResult('win');
+            }
+        }
+        
+        // Update recommended bet sizes
+        function updateRecommendedBets() {
+            const conservative = Math.max((currentBalance * 1 / 100), 20).toFixed(0);
+            const moderate = Math.max((currentBalance * 3 / 100), 20).toFixed(0);
+            const aggressive = Math.max((currentBalance * 5 / 100), 20).toFixed(0);
+            
+            const amounts = document.querySelectorAll('.rec-amount');
+            if (amounts.length >= 3) {
+                amounts[0].textContent = formatCurrency(conservative);
+                amounts[1].textContent = formatCurrency(moderate);
+                amounts[2].textContent = formatCurrency(aggressive);
+            }
+        }
+        
+        // Update recovery bet recommendations
+        function updateRecoveryBets() {
+            const recoverySection = document.getElementById('recoverySection');
+            
+            if (lastLossAmount > 0) {
+                recoverySection.style.display = 'block';
+                
+                const amounts = document.querySelectorAll('.recov-amount');
+                if (amounts.length >= 3) {
+                    amounts[0].textContent = formatCurrency(Math.max((lastLossAmount / (2 - 1)), 20).toFixed(0));
+                    amounts[1].textContent = formatCurrency(Math.max((lastLossAmount / (3 - 1)), 20).toFixed(0));
+                    amounts[2].textContent = formatCurrency(Math.max((lastLossAmount / (5 - 1)), 20).toFixed(0));
+                }
+            } else {
+                recoverySection.style.display = 'none';
+            }
+        }
+        
+        // Balance Management
+        function showBalanceModal() {
+            document.getElementById('balanceModal').classList.add('active');
+            document.getElementById('modalBalance').textContent = formatCurrency(currentBalance);
+        }
+        
+        function closeBalanceModal() {
+            document.getElementById('balanceModal').classList.remove('active');
+            document.getElementById('balanceAmount').value = '';
+        }
+        
+        function addBalance() {
+            const amount = parseFloat(document.getElementById('balanceAmount').value);
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            currentBalance += amount;
+            saveData();
+            updateStats();
+            document.getElementById('modalBalance').textContent = formatCurrency(currentBalance);
+            document.getElementById('balanceAmount').value = '';
+        }
+        
+        function removeBalance() {
+            const amount = parseFloat(document.getElementById('balanceAmount').value);
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            if (amount > currentBalance) {
+                alert('Cannot remove more than current balance');
+                return;
+            }
+            currentBalance -= amount;
+            saveData();
+            updateStats();
+            document.getElementById('modalBalance').textContent = formatCurrency(currentBalance);
+            document.getElementById('balanceAmount').value = '';
+        }
+        
+        function quickBalance(amount) {
+            currentBalance += amount;
+            saveData();
+            updateStats();
+            document.getElementById('modalBalance').textContent = formatCurrency(currentBalance);
+        }
+        
+        function resetBalance() {
+            if (confirm('Reset balance to 0? This cannot be undone.')) {
+                currentBalance = 0;
+                lastLossAmount = 0;
+                saveData();
+                updateStats();
+                document.getElementById('modalBalance').textContent = formatCurrency(currentBalance);
+                updateRecoveryBets();
+            }
+        }
+        
+        // Add new bet
+        function addBet() {
+            const amount = parseFloat(document.getElementById('betAmount').value);
+            let multiplier = selectedResult === 'win' ? 
+                parseFloat(document.getElementById('multiplier').value) : 1;
+            
+            if (!amount || amount < 20) {
+                alert('Please enter a valid bet amount (minimum 20)');
+                return;
+            }
+            
+            if (selectedResult === 'win' && (!multiplier || multiplier < 1)) {
+                alert('Please enter a valid multiplier (minimum 1.00)');
+                return;
+            }
+            
+            if (amount > currentBalance) {
+                alert('Insufficient balance! Current balance: ' + formatCurrency(currentBalance));
+                return;
+            }
+            
+            let profit = 0;
+            let newBalance = currentBalance;
+            
+            if (selectedResult === 'win') {
+                // Win: You get back your bet + profit
+                profit = (amount * multiplier) - amount;
+                newBalance = currentBalance - amount + (amount * multiplier);
+                
+                // If we win, check if we've recovered from the last loss
+                if (lastLossAmount > 0 && profit >= lastLossAmount) {
+                    lastLossAmount = 0; // Reset the loss amount if we've recovered
+                }
+            } else {
+                // Loss: You lose your bet amount
+                profit = -amount;
+                newBalance = currentBalance - amount;
+                
+                // Track the loss amount for recovery
+                lastLossAmount = amount;
+            }
+            
+            // Update balance
+            currentBalance = newBalance;
+            
+            const bet = {
+                id: Date.now(),
+                amount: amount,
+                result: selectedResult,
+                multiplier: multiplier,
+                profit: profit,
+                balanceAfter: currentBalance,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            bets.unshift(bet);
+            saveData();
+            updateStats();
+            renderHistory();
+            updateRecoveryBets();
+            
+            // Clear inputs and reset to default
+            document.getElementById('betAmount').value = '';
+            document.getElementById('multiplier').value = '2.00';
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const totalBets = bets.length;
+            const totalWagered = bets.reduce((sum, bet) => sum + bet.amount, 0);
+            const netProfit = bets.reduce((sum, bet) => sum + bet.profit, 0);
+            const wins = bets.filter(bet => bet.result === 'win').length;
+            const winRate = totalBets > 0 ? (wins / totalBets * 100).toFixed(1) : 0;
+            
+            const biggestWin = bets.length > 0 ? 
+                Math.max(...bets.map(bet => bet.profit)) : 0;
+            
+            document.getElementById('currentBalance').textContent = formatCurrency(currentBalance);
+            document.getElementById('totalBets').textContent = totalBets;
+            document.getElementById('totalWagered').textContent = formatCurrency(totalWagered);
+            document.getElementById('netProfit').textContent = formatCurrency(netProfit);
+            document.getElementById('winRate').textContent = winRate + '%';
+            document.getElementById('biggestWin').textContent = formatCurrency(biggestWin);
+            
+            // Update balance card color
+            const balanceCard = document.getElementById('balanceCard');
+            balanceCard.className = 'stat-card';
+            if (currentBalance > 0) {
+                balanceCard.classList.add('positive');
+            } else if (currentBalance < 0) {
+                balanceCard.classList.add('negative');
+            }
+            
+            // Update profit card color
+            const profitCard = document.getElementById('profitCard');
+            profitCard.className = 'stat-card';
+            if (netProfit > 0) {
+                profitCard.classList.add('positive');
+            } else if (netProfit < 0) {
+                profitCard.classList.add('negative');
+            }
+            
+            // Update recommended bet sizes
+            updateRecommendedBets();
+            
+            // Show warnings
+            showWarnings(currentBalance, netProfit, totalWagered);
+        }
+        
+        // Show warnings based on performance
+        function showWarnings(balance, netProfit, totalWagered) {
+            const alertContainer = document.getElementById('alertContainer');
+            alertContainer.innerHTML = '';
+            
+            if (balance <= 0 && bets.length > 0) {
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger">
+                        ⚠️ <strong>Balance Depleted!</strong> Your balance is at 0. Add funds to continue playing.
+                    </div>
+                `;
+            } else if (balance < 100 && balance > 0) {
+                alertContainer.innerHTML = `
+                    <div class="alert alert-warning">
+                        ⚠️ <strong>Low Balance:</strong> Your balance is running low. Consider adding more funds.
+                    </div>
+                `;
+            } else if (netProfit < -totalWagered * 0.1 && bets.length > 10) {
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger">
+                        ⚠️ <strong>Warning:</strong> You've lost more than 10% of your total wagered amount. 
+                        Consider taking a break and reviewing your strategy.
+                    </div>
+                `;
+            }
+        }
+        
+        // Render betting history
+        function renderHistory() {
+            const container = document.getElementById('historyContainer');
+            
+            if (bets.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        No bets recorded yet.<br>Start tracking above! 🚀
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = bets.slice(0, 50).map((bet, index) => {
+                const multiplierClass = bet.multiplier < 2 ? 'multiplier-low' : 
+                                       bet.multiplier < 10 ? 'multiplier-medium' : 'multiplier-high';
+                const resultClass = bet.result === 'win' ? 'win-item' : 'loss-item';
+                const profitClass = bet.profit >= 0 ? 'profit-positive' : 'profit-negative';
+                
+                return `
+                    <div class="history-item ${resultClass}">
+                        <div class="history-number">#${bets.length - index}</div>
+                        <div class="history-details">
+                            <div class="history-main">
+                                <span class="history-bet">${formatCurrency(bet.amount)}</span>
+                                ${bet.result === 'win' ? `<span class="history-multiplier ${multiplierClass}">${bet.multiplier.toFixed(2)}x</span>` : ''}
+                                <span class="history-profit ${profitClass}">
+                                    ${bet.profit >= 0 ? '+' : ''}${formatCurrency(bet.profit)}
+                                </span>
+                            </div>
+                            <div class="history-meta">${bet.timestamp}</div>
+                        </div>
+                        <div class="history-actions">
+                            <button class="btn-delete" onclick="deleteBet(${bet.id})">✕</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Delete a bet
+        function deleteBet(id) {
+            if (confirm('Delete this bet?')) {
+                const betToDelete = bets.find(bet => bet.id === id);
+                bets = bets.filter(bet => bet.id !== id);
+                
+                // If we're deleting the last loss, reset the lastLossAmount
+                if (betToDelete && betToDelete.result === 'loss') {
+                    // Find the most recent loss in the remaining bets
+                    const recentLoss = bets.find(bet => bet.result === 'loss');
+                    lastLossAmount = recentLoss ? recentLoss.amount : 0;
+                }
+                
+                saveData();
+                updateStats();
+                renderHistory();
+                updateRecoveryBets();
+            }
+        }
+        
+        // Clear all history
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all betting history? Balance will be preserved.')) {
+                bets = [];
+                lastLossAmount = 0;
+                saveData();
+                updateStats();
+                renderHistory();
+                updateRecoveryBets();
+            }
+        }
+        
+        // Export data as CSV
+        function exportData() {
+            if (bets.length === 0) {
+                alert('No data to export');
+                return;
+            }
+            
+            const csv = [
+                ['Bet Amount', 'Multiplier', 'Result', 'Profit/Loss', 'Timestamp'],
+                ...bets.map(bet => [
+                    bet.amount,
+                    bet.multiplier,
+                    bet.result,
+                    bet.profit,
+                    bet.timestamp
+                ])
+            ].map(row => row.join(',')).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'aviator-bets-' + new Date().toISOString().split('T')[0] + '.csv';
+            a.click();
+        }
+        
+        // Load data on page load
+        loadData();
+    </script>
+</body>
+</html>
